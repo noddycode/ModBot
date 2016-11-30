@@ -16,6 +16,6 @@ Automatically replaces a single greentext-style message with a greentext message
 
 This bot was built using:
 
-[Grunt](http://gruntjs.com/)    
-[Discord.js](https://discord.js.org/#/)
+[Grunt](http://gruntjs.com/) 
+[Discord.js](https://discord.js.org/#/)  
 [rss-feed-emitter](https://github.com/filipedeschamps/rss-feed-emitter)
