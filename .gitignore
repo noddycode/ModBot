@@ -38,3 +38,6 @@ jspm_packages
 
 # Directory for code copies
 backup
+
+#Files with sensitive data
+config
