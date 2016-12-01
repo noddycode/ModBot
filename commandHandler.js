@@ -28,6 +28,18 @@ bot.on("message", msg => {
     	if (!denyNonMod(msg)) return;
     	handleTimeout(msg);
     }
+
+    else if (cont.startsWith("!lock"))
+    {
+    	if (!denyNonMod(msg)) return;
+    	handleLock(msg, false);
+    }
+
+    else if (cont.startsWith("!unlock"))
+    {
+    	if (!denyNonMod(msg)) return;
+    	handleLock(msg, true);
+    }
 });
 
 function checkMod(msg)
@@ -43,6 +55,7 @@ function checkMod(msg)
 		return false;
 	}
 }
+
 
 function denyNonMod(msg)
 {
@@ -87,6 +100,7 @@ function handleRollDice(msg)
 	if (numDice > 10)
 	{
 		msg.channel.sendMessage("ERROR: I can't roll that many dice!")
+		return;
 	}
 
 	let output = "```\n";
@@ -107,20 +121,6 @@ function handleRollDice(msg)
 
 	msg.channel.sendMessage(output);
 
-}
-
-function handleGreenText(msg)
-{
-	let cont = msg.content;
-	let resCount = cont.split("\n").length;
-	if (resCount > 1) return; //This command will not work properly with multi-line comments
-
-	let author = msg.author.username
-	let template = "```css\n" + cont + "\n```-" + author;
-
-	msg.delete();
-	msg.channel.sendMessage(template)
-	
 }
 
 function handleTimeout(msg)
@@ -151,6 +151,35 @@ function handleTimeout(msg)
 	}
 }
 
+function handleLock(msg, newVal)
+{
+	let chan = msg.mentions.channels.first();
+
+	if (!chan)
+	{
+		msg.channel.sendMessage("ERROR: Incorrect parameters!\nCommand should be in the form \"**!lock [channel mention]**\"");
+		return;
+	}
+
+	let roles = msg.guild.roles;
+
+	let botRole = msg.guild.member(bot.user).highestRole;
+	roles.forEach(role =>
+	{
+		if (botRole.comparePositionTo(role) > 0)
+		{
+			chan.overwritePermissions(role, {'SEND_MESSAGES': newVal});
+			
+		}
+	});
+
+	if (newVal)
+		chan.sendMessage("This channel is now unlocked!");
+	else
+		chan.sendMessage("This channel has been locked!");
+
+}
+
 function handle8ball(msg)
 {
 	let res = msg.content.split(" ");
@@ -171,4 +200,4 @@ bot.on('ready', () => {
 
 bot.login(Config.token);
 
-//Permissions: 0x10000c00
+//Permissions: 0x10000c20
