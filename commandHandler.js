@@ -41,7 +41,7 @@ bot.bot.on("message", msg => {
 
 
 bot.bot.on('ready', () => {
-  console.log('I am ready!');
+  console.log('Command process ready!');
 });
 
 //Permissions: 0x10000c20

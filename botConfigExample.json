@@ -1,8 +1,10 @@
 {
 	"ids": {
 		"badid": "ID_OF_BAD_ROLE_AS_STRING",
-		"badch": "ID_OF_BAD_CHANNEL_AS_STRING"
+		"badch": "ID_OF_BAD_CHANNEL_AS_STRING",
+		"updatech": "ID_OF_UPDATE_CHANNEL_AS_STRING"
 	},
 
+	"rssurl": "URL_OF_RSS_FEED",
 	"token": "BOT_TOKEN"
 }

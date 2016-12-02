@@ -1,5 +1,5 @@
 var Discord = require("./node_modules/discord.js");
-var Config = (process.argv[2]);
+var Config = require(process.argv[2]);
 var Util = require("./util.js");
 var getConfig = Util.getConfig;
 
@@ -7,7 +7,7 @@ class Bot {
 	constructor()
 	{
 		this._bot = new Discord.Client();
-		this._bot.login(getConfig(Config.token));
+		this._bot.login(Config.token);
 	}
 
 	get bot()
@@ -152,6 +152,7 @@ class Bot {
 		let rand = ballAnswers[Math.floor(Math.random() * ballAnswers.length)];
 		msg.channel.sendMessage("**The Great ModBot says: **\"" + rand +"\"");
 	}
+
 }
 
 exports.Bot = Bot;
