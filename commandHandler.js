@@ -163,6 +163,9 @@ function handleLock(msg, newVal)
 
 	let roles = msg.guild.roles;
 
+	if (!newVal)
+		chan.sendMessage("This channel has been locked!");
+
 	let botRole = msg.guild.member(bot.user).highestRole;
 	roles.forEach(role =>
 	{
@@ -175,8 +178,6 @@ function handleLock(msg, newVal)
 
 	if (newVal)
 		chan.sendMessage("This channel is now unlocked!");
-	else
-		chan.sendMessage("This channel has been locked!");
 
 }
 
