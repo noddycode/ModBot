@@ -46,15 +46,21 @@ class Bot {
 	{
 		let cont = msg.content;
 		let res = cont.split(" ");
-		let dice = parseInt(res[1]);
-		let numDice = NaN;
 
-		if (res.length >= 3) numDice = parseInt(res[2]);
-		else numDice = 1;
-
-		if (res.length < 2 || res.length > 4 || !dice || !numDice)
+		if (res.length === 1)
 		{
-			msg.channel.sendMessage("ERROR: Incorrect parameters!\nCommand should be in the form \"**!roll [highest value of dice] [how many rolls (optional)] [\"add\" (optional)]**\"")
+			let num = Util.getRandomIntInclusive(1, 20);
+			msg.channel.sendMessage(`\`\`\`d20 Result: ${num}\`\`\``);
+			return;
+		}
+
+		let rolls = res[1].split("d");
+		let dice = parseInt(rolls[1]);
+		let numDice = parseInt(rolls[0]);
+
+		if (res.length < 2 || res.length > 3 || !dice || !numDice)
+		{
+			msg.channel.sendMessage("ERROR: Incorrect parameters! (use just \"!roll\" to roll a d20)\nCommand should be in the form \"**!roll [#of rolls]d[#highest value of die] [\"add\" (optional)]**\"")
 			return;
 		}
 
@@ -76,7 +82,7 @@ class Bot {
 			output += temp;
 		}
 
-		if (res[3] === "add") output += "\n Sum: " + sum + "\n";
+		if (res[2] === "add") output += "\n Sum: " + sum + "\n";
 
 		output += "```"
 
