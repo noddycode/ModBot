@@ -36,4 +36,4 @@ if (!cName.endsWith(".json"))
 //var Config = require(process.argv[2] ||"./botConfig.json");
 
 const ch = ChildProcess.fork("./commandHandler.js", [cName]);
-const rss = ChildProcess.fork("./rssHandler.js", [cName]);
+//const rss = ChildProcess.fork("./rssHandler.js", [cName]);
