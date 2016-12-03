@@ -5,6 +5,14 @@
 		"updatech": "ID_OF_UPDATE_CHANNEL_AS_STRING"
 	},
 
-	"rssurl": "URL_OF_RSS_FEED",
+	"update": {
+		"url": "URL_OF_BLOG",
+		"tags":
+		[
+			"SEARCH_TAG1",
+			"SEARCH_TAG2",
+			"SEARCH_TAG3"
+		]
+	},
 	"token": "BOT_TOKEN"
 }

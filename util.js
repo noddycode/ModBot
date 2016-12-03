@@ -10,20 +10,13 @@ exports.getRandomIntInclusive = function(min, max)
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-exports.inArray = function(searchItem, array)
+exports.inArray = function(searchArray, targetArray)
 {
-	let item = searchItem.toLowerCase();
-	let tmp = array;
-
-	tmp.forEach(function(item, i)
+	for (var i = 0; i < searchArray.length; i++)
 	{
-		tmp[i] = tmp[i].toLowerCase();
-	});
+		if (targetArray.indexOf(searchArray[i]) >= 0)
+			return true;
+	}
 
-	let idx = array.indexOf(item);
-
-	if (idx <= 0)
-		return false;
-	else
-		return true;
+	return false;
 }
