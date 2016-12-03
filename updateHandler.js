@@ -86,9 +86,9 @@ var update = function ()
 
 		});
 
-		if (postStack.legnth <= 0)
+		if (postStack.length <= 0)
 			return;
-		
+
 		lastPost = getID(postStack[postStack.length - 1]);
 		while (postStack.length > 0)
 		{
