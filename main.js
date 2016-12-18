@@ -4,6 +4,9 @@ var fs = require("fs");
 
 var cName = process.argv[2]; //Should be a config file
 
+if (cName === undefined)
+	cName = "./botConfig.json";
+
 cName = cName.replace(/\\/g,"\/") //Changes Windows path strings to Unix-like path
 
 //Error checking for config file
@@ -13,10 +16,7 @@ try
 
 } catch (e)
 {
-	if (e instanceof TypeError)
-		cName = "./botConfig.json";
-
-	else if (e.message.startsWith("ENOENT"))
+	if (e.message.startsWith("ENOENT"))
 	{
 		console.log(`ERROR: File '${cName}' could not be read`);
 		process.exit();

@@ -46,6 +46,7 @@ function getID(url)
 var update = function ()
 {
 	rp(Config.update.url)
+	.then(console.log('Update started'))
 	.then( html =>
 	{
 		var $ = cheerio.load(html);
@@ -89,22 +90,25 @@ var update = function ()
 		if (postStack.length <= 0)
 			return;
 
-		lastPost = getID(postStack[postStack.length - 1]);
+		lastPost = getID(postStack[0]);
 		while (postStack.length > 0)
 		{
 			updateChannel.sendMessage(`**Update**: ${postStack.pop()}`);
 			console.log("Blog updated");
 		}
+
+		
 	})
 	.catch(function(err)
 	{
 		console.log(`ERROR: Could not get webpage: '${err}'`);
-	});
+	})
+	.then(console.log('Update finished'));
 }
 
-var getNewPosts = function(last)
+var getNewPosts = function()
 {
-
+	update();
 	setInterval(update, refresh);
 }
 
@@ -115,5 +119,9 @@ bot.login(Config.token)
 bot.on('ready', () => {
   console.log('Updater process ready!');
   updateChannel = bot.channels.get(Config.ids.updatech);
-  getInitialPost().then(getNewPosts());
+  getInitialPost().then(val => 
+  	{
+  		lastPost = val;
+  		getNewPosts()
+  	});
 });
