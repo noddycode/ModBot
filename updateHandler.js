@@ -115,9 +115,5 @@ bot.login(Config.token)
 bot.on('ready', () => {
   console.log('Updater process ready!');
   updateChannel = bot.channels.get(Config.ids.updatech);
-  getInitialPost().then(val => 
-	{
-		lastPost = val;
-		getNewPosts(val);
-	});
+  getInitialPost().then(getNewPosts());
 });

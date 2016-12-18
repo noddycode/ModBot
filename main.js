@@ -4,6 +4,8 @@ var fs = require("fs");
 
 var cName = process.argv[2]; //Should be a config file
 
+cName = cName.replace(/\\/g,"\/") //Changes Windows path strings to Unix-like path
+
 //Error checking for config file
 try
 {
