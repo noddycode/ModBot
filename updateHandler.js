@@ -94,7 +94,6 @@ var update = function ()
 		while (postStack.length > 0)
 		{
 			updateChannel.sendMessage(`**Update**: ${postStack.pop()}`);
-			console.log("Blog updated");
 		}
 
 		
@@ -102,8 +101,7 @@ var update = function ()
 	.catch(function(err)
 	{
 		console.log(`ERROR: Could not get webpage: '${err}'`);
-	})
-	.then(console.log('Update finished'));
+	});
 }
 
 var getNewPosts = function()
