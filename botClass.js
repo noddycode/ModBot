@@ -42,6 +42,13 @@ class Bot {
 		}
 	}
 
+	//Utility functio to get a role from an id
+	getRole(guild, roleid)
+	{
+		let roles = guild.roles;
+		return roles.find('id', roleid);
+	}
+
 	handleRollDice(msg)
 	{
 		let cont = msg.content;
@@ -143,24 +150,34 @@ class Bot {
 			return;
 		}
 
-		let roles = msg.guild.roles;
+		//let roles = msg.guild.roles;
+		let roles = []
 
 		let botRole = msg.guild.member(this.bot.user).highestRole;
+
+		//Grabs present roles in channel (including @everyone)
+		let overwrites = chan.permissionOverwrites;
+		
+		//Adds all valid (non-mod and non-bad) roles to a list for processing
+		overwrites.array().forEach(entry => 
+		{
+			let role = this.getRole(msg.guild, entry.id);
+			if (botRole.comparePositionTo(role) > 0 && entry.id != Config.ids.badid)
+				roles.push(role);
+		});
 
 		if (!newVal)
 			chan.sendMessage("This channel has been locked!");
 		
 		roles.forEach(role =>
 		{
-			if (botRole.comparePositionTo(role) > 0)
-			{
-				chan.overwritePermissions(role, {'SEND_MESSAGES': newVal});
-				
-			}
+			chan.overwritePermissions(role, {'SEND_MESSAGES': newVal});
 		});
 
 		if (newVal)
+		{
 			chan.sendMessage("This channel is now unlocked!");
+		}
 	}
 
 	handle8ball(msg)
