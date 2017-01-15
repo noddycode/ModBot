@@ -45,17 +45,7 @@ function getID(url)
 
 var update = function ()
 {
-	rp(
-		//Options here request the iphone6 version of the page to give us a standard theme to reliably scrape
-		//Note that any participating blogs MUST have the default mobile view enabled for this to work
-		{
-			uri: Config.update.url,
-			headers: {
-				'User-Agent': 'Apple-iPhone7C2/1202.466'
-			}
-		}
-	)
-	.then(console.log('Update started'))
+	rp(Config.update.url)
 	.then( html =>
 	{
 		var $ = cheerio.load(html);
@@ -103,6 +93,7 @@ var update = function ()
 		while (postStack.length > 0)
 		{
 			updateChannel.sendMessage(`**Update**: ${postStack.pop()}`);
+			console.log("Blog updated");
 		}
 
 		
