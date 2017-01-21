@@ -60,6 +60,8 @@ class Bot {
 		let numDice = parseInt(rolls[0]);
 
 		let add = parseInt(rolls[2])
+
+		//TIME TO GET RID OF ALL THIS SHIT
 		if(!add)
 		{
 			add = 0
