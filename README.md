@@ -13,6 +13,4 @@ Answers the given yes/no question.
 
 This bot was built using:
 
-[Grunt](http://gruntjs.com/)   
-[Discord.js](https://discord.js.org/#/)    
-[rss-feed-emitter](https://github.com/filipedeschamps/rss-feed-emitter)    
+[Discord.js](https://discord.js.org/#/)

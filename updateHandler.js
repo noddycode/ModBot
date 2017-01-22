@@ -46,7 +46,6 @@ function getID(url)
 var update = function ()
 {
 	rp(Config.update.url)
-	.then(console.log('Update started'))
 	.then( html =>
 	{
 		var $ = cheerio.load(html);
@@ -102,8 +101,7 @@ var update = function ()
 	.catch(function(err)
 	{
 		console.log(`ERROR: Could not get webpage: '${err}'`);
-	})
-	.then(console.log('Update finished'));
+	});
 }
 
 var getNewPosts = function()
