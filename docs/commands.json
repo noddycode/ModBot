@@ -41,7 +41,7 @@
 		"desc": "Places a user in timeout ('bad' role) for the specified amount of time.",
 		"long": "A user is placed in the 'bad' role and may only post in the 'bad' channel until the time expires.",
 		"mod": true,
-		"reg": "^!timeout\\s<@(\\d+)>$"
+		"reg": "^!timeout\\s(\\d+)\\s<@(\\d+)>$"
 	},
 
 	"unlock":

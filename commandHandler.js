@@ -1,6 +1,9 @@
-var BotClass = require("./botClass.js");
-var bot = new BotClass.Bot();
+var Discord = require('discord.js');
 var commands = require("./docs/commands.json");
+var Util = require("./util.js")
+var Config = require(process.argv[2]);
+
+var bot = new Discord.Client();
 
 'use strict';
 
@@ -32,6 +35,12 @@ ModBot.handleCommand = function(msg)
 
     else
     {
+        if (cmd.mod)
+        {
+            if (!ModBot.denyNonMod(msg))
+                return -4;
+        }
+
         if (command === '8ball')
             command = eightBall;
 
@@ -42,10 +51,34 @@ ModBot.handleCommand = function(msg)
 
         return 0;
     }
-
-    //NOTE: Use Object.defineProperty()
-
 } 
+
+ModBot.denyNonMod = function(msg)
+{
+    if (!ModBot.checkMod(msg))
+    {   
+        msg.channel.sendMessage("Only mods can use this command!")
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+ModBot.checkMod = function(msg)
+{
+    let botRole = msg.guild.member(bot.user).highestRole;
+    let comp = botRole.comparePositionTo(msg.member.highestRole)
+    if (comp <= 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 ModBot.eightBall = function(obj)
 {
@@ -78,8 +111,87 @@ ModBot.help = function(obj)
         }
 
         let cmd = commands[obj.args[0]];
-        obj.msg.channel.sendMessage(`**${cmd.format}**\n\n${cmd.long}`)   
+        obj.msg.channel.sendMessage(`**${cmd.format}**\n\n${cmd.long}`);
     }
+}
+
+ModBot.roll = function(obj)
+{
+
+    let args = obj.args;
+
+    //Rolls 1d20 if no other dice have been specified
+    if (!args[1])
+    {
+        let num = Util.getRandomIntInclusive(1, 20);
+        obj.msg.channel.sendMessage(`\`\`\`d20 Result: ${num}\`\`\``);
+        return;
+    }
+
+    let dice = parseInt(args[1]);
+    let numDice = parseInt(args[0]);
+
+    let add = parseInt(args[3])
+
+    if(!add)
+    {
+        add = 0
+    }
+
+    if (numDice > 10)
+    {
+        obj.msg.channel.sendMessage("ERROR: I can't roll that many dice!");
+        return;
+    }
+
+    if (dice > 500)
+    {
+        obj.msg.channel.sendMessage("ERROR: I couldn't roll a die that big if I wanted to!");
+        return;
+    }
+
+    let output = "```\n";
+
+    let sum = 0;
+
+    for (let i = 0; i < numDice; i++)
+    {
+        let num = Util.getRandomIntInclusive(1, dice);
+        sum += num;
+        let temp = "Roll " + (i + 1) +": " + num + "\n";
+        output += temp;
+    }
+
+    sum += add;
+
+    //'+' symbol stored in args[2] if it is present
+    if (args[2])
+        output += "\n Sum: " + sum + "\n";
+
+    output += "```"
+
+    obj.msg.channel.sendMessage(output);
+}
+
+ModBot.timeout = function(obj)
+{
+    //Message should have order "!timeout [time] [user mention]"
+
+    let time = parseInt(obj.args[0]);
+    console.log(obj.msg.mentions.users.first());
+    let member = obj.msg.guild.member(obj.msg.mentions.users.first());
+    
+
+    member.addRole(Config.ids.badid);
+    obj.msg.channel.sendMessage("User **" + member.toString() + "** has been placed in timeout for **" + time + "** minutes.")
+
+    let timeSec = time * 1000 * 60;
+    setTimeout(function()
+    {
+        member.removeRole(Config.ids.badid);
+        console.log("User has been removed from timout")
+    }
+    , timeSec);
 }
 
 ModBot.lock = function(obj)
@@ -97,7 +209,7 @@ ModBot.handleLock = function(msg, newVal)
 {
     let chan = msg.mentions.channels.first();
     let roles = msg.guild.roles;
-    let botRole = msg.guild.member(bot.bot.user).highestRole;
+    let botRole = msg.guild.member(bot.user).highestRole;
 
     if (!newVal)
         chan.sendMessage("This channel has been locked!");
@@ -115,42 +227,14 @@ ModBot.handleLock = function(msg, newVal)
         chan.sendMessage("This channel is now unlocked!");
 }
 
-bot.bot.on("message", msg => {
-	let cont = msg.content;
-
+bot.on("message", msg => 
+{
     ModBot.handleCommand(msg);
-
-	// if (!cont.startsWith("!"))
-	// {
-	// 	return;
-	// }
-
-	// if (cont.startsWith("!8ball")) bot.handle8ball(msg);
-	// else if (cont.startsWith("!roll")) bot.handleRollDice(msg);
-
-	
-    
- //    else if (cont.startsWith("!timeout"))
- //    {
- //    	if (!bot.denyNonMod(msg)) return;
- //    	bot.handleTimeout(msg);
- //    }
-
- //    else if (cont.startsWith("!lock"))
- //    {
- //    	if (!bot.denyNonMod(msg)) return;
- //    	bot.handleLock(msg, false);
- //    }
-
- //    else if (cont.startsWith("!unlock"))
- //    {
- //    	if (!bot.denyNonMod(msg)) return;
- //    	bot.handleLock(msg, true);
- //    }
 });
 
+bot.login(Config.token)
 
-bot.bot.on('ready', () => {
+bot.on('ready', () => {
   console.log('Command process ready!');
 });
 
