@@ -1,13 +1,4 @@
 {
-	"8ball":
-	{
-		"format": "!8ball \"question\"",
-		"desc": "Answers a single yes/no question.",
-		"long": "This function takes a question as a parameter and returns a yes or no answer of some variety.",
-		"mod": false,
-		"reg": "^!8ball\\s(\".+\")$"
-	},
-
 	"help":
 	{
 		"format": "!help [command]",
@@ -41,7 +32,7 @@
 		"desc": "Places a user in timeout ('bad' role) for the specified amount of time.",
 		"long": "A user is placed in the 'bad' role and may only post in the 'bad' channel until the time expires.",
 		"mod": true,
-		"reg": "^!timeout\\s(\\d+)\\s<@(\\d+)>$"
+		"reg": "^!timeout\\s(\\d+)\\s<@(?:!)?(\\d+)>$"
 	},
 
 	"unlock":
