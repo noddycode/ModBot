@@ -17,7 +17,13 @@ ModBot.handleCommand = function(msg)
         return -1;
 
     //Grabs the command text and removes the '!'
-    var command = msg.content.match(/^(?:!)(\w+)/)[1];
+    var cMatch = msg.content.match(/^(?:!)(\w+)/);
+
+    //Indicates a message that only contains '!'s
+    if (!cMatch)
+        return -1;
+
+    var command = cMatch [1];
 
     if (!commands.hasOwnProperty(command))
         return -2;
@@ -25,6 +31,10 @@ ModBot.handleCommand = function(msg)
     var cmd = commands[command];
 
     var pattern = new RegExp(cmd.reg);
+
+    // Now undeeded, but kept here for possible future use
+    // var date = new Date();
+    // console.log(`${date.toString()} - '${command}' sent in ${msg.channel.name}: '${msg.content}'`);
 
     if(!pattern.test(msg.content))
     {
@@ -48,6 +58,7 @@ ModBot.handleCommand = function(msg)
         let obj = {"msg": msg, "args": prm};
 
         ModBot[command](obj);
+
 
         return 0;
     }
