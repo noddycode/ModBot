@@ -15,14 +15,15 @@ var refresh = parseInt(Config.update.refresh);
 var getInitialPost = function()
 {
 	return rp(
-		//Options here request the iphone6 version of the page to give us a standard theme to reliably scrape
-		//Note that any participating blogs MUST have the default mobile view enabled for this to work
-		{
-			uri: Config.update.url,
-			headers: {
-				'User-Agent': 'Apple-iPhone7C2/1202.466'
+			//Options here request the iphone6 version of the page to give us a standard theme to reliably scrape
+			//Note that any participating blogs MUST have the default mobile view enabled for this to work
+			{
+				uri: Config.update.url,
+				headers: {
+					'User-Agent': 'Apple-iPhone7C2/1202.466'
+				}
 			}
-		})
+		)
 		.then(function(html)
 		{
 			var $ = cheerio.load(html);
@@ -53,14 +54,16 @@ function getID(url)
 
 var update = function ()
 {
-	rp(		//Options here request the iphone6 version of the page to give us a standard theme to reliably scrape
-		//Note that any participating blogs MUST have the default mobile view enabled for this to work
-		{
-			uri: Config.update.url,
-			headers: {
-				'User-Agent': 'Apple-iPhone7C2/1202.466'
+	rp(	
+			//Options here request the iphone6 version of the page to give us a standard theme to reliably scrape
+			//Note that any participating blogs MUST have the default mobile view enabled for this to work
+			{
+				uri: Config.update.url,
+				headers: {
+					'User-Agent': 'Apple-iPhone7C2/1202.466'
+				}
 			}
-		})
+		)
 	.then( html =>
 	{
 		var $ = cheerio.load(html);
