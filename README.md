@@ -1,16 +1,15 @@
 # ModBot
 
-This is a simple little bot made specifically for [Silver](http://silverliveblogsthings.tumblr.com/)'s Discord server.
+This is a simple little bot made specifically for liveblogging discord servers.
 
-## Commands
-- **!timeout [#minutes] [user mention]**    
-Puts a user in timeout for the specefied amount of time. Note that the user mention **must** be an @ mention.
+##Installing and Running ModBot
 
-- **!8ball [question]**    
-Answers the given yes/no question.
+Currently, the only thing required to run ModBot is a working version of [Node](https://nodejs.org/en/), the main.js file, and a config file with the format provided in botConfigExample.json. The update and command handlers can also be run seperately.
 
-## Credits
+Sample startup:
 
-This bot was built using:
+    node ./main.js ./botConfig.json
 
-[Discord.js](https://discord.js.org/#/)
+While this is the only thing required, [PM2](http://pm2.keymetrics.io/) is recommended in place of nohup to run the bot as a daemon. 
+
+Built using [Discord.js](https://discord.js.org/#/)
