@@ -1,6 +1,6 @@
 # ModBot
 
-This is a simple little bot made specifically for liveblogging discord servers.
+This is a simple little bot made specifically for liveblogging discord servers. Please note that this bot is in its early stages and major changes are likely to occur in the future.
 
 ##Installing and Running ModBot
 
@@ -10,6 +10,16 @@ Sample startup:
 
     node ./main.js ./botConfig.json
 
-While this is the only thing required, [PM2](http://pm2.keymetrics.io/) is recommended in place of nohup to run the bot as a daemon. 
+[PM2](http://pm2.keymetrics.io/) is recommended in place of nohup to run the bot as a daemon.
+
+##Permissions
+
+To run properly, any bots running this code should have the following permissions:
+* Manage Server
+* Manage Roles
+* Read Messages
+* Send Messages
+
+More permissions may be required as the bot is developed.
 
 Built using [Discord.js](https://discord.js.org/#/)
