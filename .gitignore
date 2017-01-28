@@ -41,3 +41,6 @@ backup
 
 #Files with sensitive data
 config
+
+#Dev files
+dev

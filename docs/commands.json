@@ -1,0 +1,46 @@
+{
+	"help":
+	{
+		"format": "!help [command]",
+		"desc": "Displays this help message, or help for the specified command.",
+		"long": "The help function without additional parameters displays a list of all functions with their parameter format along with a short description. Running the command with a parameter displays the detailed description for that command.",
+		"mod": false,
+		"reg": "^!help(?:\\s(\\w+))?$"
+	},
+
+	"lock":
+	{
+		"format": "!lock #channel",
+		"desc": "Locks a channel, preventing all non-mods from posting in it.",
+		"long": "This command prevents all non-mods from posting in the given channel.",
+		"mod": true,
+		"reg": "^!lock\\s<#(\\d+)>$"
+	},
+
+	"roll":
+	{
+		"format": "!roll [num_dice'd'num_sides['+'[number]]]",
+		"desc": "Rolls the specified number and type of dice, optionally summing the rolls and adding a given number. '!roll' by itself rolls a d20.",
+		"long": "This command rolls dice in the common D&D-type format (i.e. '4d6'). Optional parameters include a '+' at the end to sum the rolls (i.e. '!roll 4d6+' will return 4 rolls of a 6-sided die added together). Additionally, a number may be added after the '+' to add that number to the roll (i.e. '!roll 4d6+3'). The bot can roll a maximum of 10 dice at once, with a limit of 500 faces. '!roll' by itself rolls a d20.",
+		"mod": false,
+		"reg": "^!roll(?:\\s(\\d+)d(\\d+)(\\+)?(\\d+)?)?$"
+	},
+
+	"timeout":
+	{
+		"format": "!timeout num_minutes @user",
+		"desc": "Places a user in timeout ('bad' role) for the specified amount of time.",
+		"long": "A user is placed in the 'bad' role and may only post in the 'bad' channel until the time expires.",
+		"mod": true,
+		"reg": "^!timeout\\s(\\d+)\\s<@(?:!)?(\\d+)>$"
+	},
+
+	"unlock":
+	{
+		"format": "!unlock #channel",
+		"desc": "Unlocks a previously locked channel, allowing users to post in it.",
+		"long": "This command unlocks a previously locked channel. It has no effect on channels that have not been locked.",
+		"mod": true,
+		"reg": "^!unlock\\s<#(\\d+)>$"
+	}
+}
