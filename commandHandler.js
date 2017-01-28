@@ -1,5 +1,5 @@
 var Discord = require('discord.js');
-var commands = require("./docs/commands.json");
+var commands = require("./config/commands.json");
 var Util = require("./util.js")
 var Config = require(process.argv[2]);
 
