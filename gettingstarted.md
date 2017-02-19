@@ -7,9 +7,11 @@ Before using ModBot, make sure you have the following configured:
 Your blog must have the mobile verson enabled for the update process to work (though this should be fixed in the future). If you are not sure, navigate to the advanced options in your theme settings and make sure "Use default mobile theme" is enabled.
 
 <div style="text-align:center">
-	<img src = "https://i.gyazo.com/7a0bbaf98041fc4a56c7f23518cecce2.png" />
+	<img src = "/images/permissions.png" />
 </div>
 
-## Step 2: Configuring your server
+### Step 2: Setting proper permissions and position for the bot
 
-Some of the functions require 
+### Step 3: Configuring your server
+
+Some of the functions require configuration
