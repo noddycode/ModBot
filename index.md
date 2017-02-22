@@ -4,7 +4,7 @@
 
 Welcome to the homepage for ModBot, a bot of assorted features made for livebloggers who are hosting their own Discord servers.
 
-Just added ModBot to your server? Check out the [Getting Started page!](ModBot/gettingstarted)
+Just added ModBot to your server? Check out the [Getting Started page!](gettingstarted)
 
 Come check out the ModBot discord server!
 
