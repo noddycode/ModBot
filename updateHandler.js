@@ -9,8 +9,9 @@ var Promise = require('bluebird');
 var Tumblr = require('tumblr.js');
 
 var bot = new Discord.Client();
+var user = Config.update.username;
+var tag = Config.update.tag;
 var updateChannel;
-var lastPost;
 var refresh = parseInt(Config.update.refresh);
 
 var ModBot = ModBot || {};
@@ -29,15 +30,56 @@ ModBot.UpdateHandler = class
 			returnPromises: true
 		}
 
-		console.log(bot);
-
+		this.bot = bot;
 		this.client = new Tumblr.Client(authObject);
-
-		this.client.blogPosts('noddybots', {limit:6, tag: "mb, pony liveblogs"}).then(resp =>
-		{
-			console.log(resp.posts);
-		});
+		this.lastUpdate;
 	}
+
+	init()
+	{
+		return this.client.blogPosts(user, {limit:1})
+		.then(function(response)
+		{
+			this.lastUpdate = Number(response.posts[0].id);
+		}.bind(this));
+	}
+
+	update()
+	{
+		
+		return this.client.blogPosts(user, {limit: 10, tag: tag})
+		.then(function(response)
+		{
+			//Grabs all new posts (up to 10) that have been made since the last update
+			var newPosts = response.posts.filter(function(post)
+			{
+				return post.id > this.lastUpdate;
+			}.bind(this));
+
+			if (newPosts.length <= 0)
+			{
+				return;
+			}
+
+			//Reverses posts so that they will be in chronological order
+			newPosts.reverse()
+
+			newPosts.forEach(function(post)
+			{
+				updateChannel.sendMessage(`**Update:** ${post.post_url}`)
+				//Should be the most recent post by the end of this loop
+				this.lastUpdate = Number(post.id);
+			}.bind(this));
+
+		}.bind(this));
+	}
+
+	getNewPosts()
+	{
+		this.update();
+		setInterval(() => this.update(), refresh);
+	}
+
 }
 
 // //Gets the latest post id when the bot is started
@@ -162,9 +204,12 @@ ModBot.UpdateHandler = class
 bot.login(Config.token)
 
 bot.on('ready', () => {
-	var udh = new ModBot.UpdateHandler(Config.update.tumblr_token, Config.update.tumblr_secret, this);
-	console.log('Updater process ready!');
-  // updateChannel = bot.channels.get(Config.ids.updatech);
+	var udh = new ModBot.UpdateHandler(Config.update.tumblr_token, Config.update.tumblr_secret, bot);
+	updateChannel = bot.channels.get(Config.ids.updatech);
+	udh.init()
+	.then(() => console.log('Updater process ready!'))
+	.then(() => udh.getNewPosts());
+
   // getInitialPost().then(val => 
   // 	{
   // 		lastPost = val;
