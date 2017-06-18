@@ -96,6 +96,46 @@ ModBot.eightBall = function(obj)
     return;
 }
 
+ModBot.birthday = function(obj)
+{
+    var bdayName = obj.args[0];
+
+    //This section duplicates the last vowel in the
+    //name and elongates it
+    var vowelRegex = /[aeiouy]/ig
+    var vowelMatch;
+    var lastVowel;
+    var lastVowelIdx;
+
+    while ((vowelMatch = vowelRegex.exec(bdayName)) != null)
+    {
+        lastVowel = vowelMatch[0];
+        lastVowelIdx = vowelMatch.index;
+    }
+
+    var longBdayName = bdayName;
+
+    if(lastVowelIdx)
+    {
+        longBdayName = bdayName.substr(0, lastVowelIdx) + lastVowel.repeat(5) + bdayName.substr(lastVowelIdx);
+    }
+
+    var channel = obj.msg.channel;
+
+    channel.sendMessage("Sing along, everyone!\n https://youtu.be/AW3KOB7BnsY");
+
+    // channel.sendMessage(`Happy birthday to you,\n
+    //                     Happy birthday to you!\n
+    //                     Happy birthday dear ${longBdayName},\n
+    //                     Happy birthday to youuuu~`);
+
+    setTimeout(() => channel.sendMessage("**Happy birthday to you,**"), 5000);
+    setTimeout(() => channel.sendMessage("**Happy birthday to you!**"), 7000);
+    setTimeout(() => channel.sendMessage(`**Happy birthday dear ${longBdayName}**`), 11000);
+    setTimeout(() => channel.sendMessage("**Happy birthday to youuuu~**"), 13000);
+    setTimeout(() => channel.sendMessage(":tada: :tada: :confetti_ball: :gift: :birthday: :gift: :confetti_ball: :tada: :tada:"), 15000);
+}
+
 ModBot.help = function(obj)
 {
     //!help with no arguments 
