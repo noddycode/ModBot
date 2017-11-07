@@ -6,14 +6,11 @@
 	},
 
 	"update": {
-		"url": "URL_OF_BLOG",
+		"username": "NAME_OF_BLOG",
 		"refresh": "REFRESH_RATE",
-		"tags":
-		[
-			"SEARCH_TAG1",
-			"SEARCH_TAG2",
-			"SEARCH_TAG3"
-		]
+		"tumblr_token": "TUMBLR_API_TOKEN",
+		"tumblr_secret": "TUMBLER_API_SECRET",
+		"tag": "TAG_TO_SEARCH_FOR"
 	},
 	"token": "BOT_TOKEN"
 }

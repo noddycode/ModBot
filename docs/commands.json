@@ -1,4 +1,12 @@
 {
+	"birthday":
+	{
+		"format": "!birthday \"name\"",
+		"desc": "Sings happy birthday to one lovely person.",
+		"long": "This command will post a birthday song instrumental and sing out the birthday song!",
+		"mod": false,
+		"reg": "^!birthday \"([\\w\\s]+)\"$"
+	},
 	"help":
 	{
 		"format": "!help [command]",
